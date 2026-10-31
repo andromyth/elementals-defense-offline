@@ -1,0 +1,26 @@
+# Build outputs
+build/
+dist/
+out/
+*.apk
+*.apks
+*.aab
+*.dex
+*.class
+
+# Decompiled and extracted proprietary package content
+original/
+decoded/
+decompiled/
+extracted/
+
+# Signing credentials
+*.jks
+*.keystore
+keystore.properties
+local.properties
+
+# IDE / OS
+.idea/
+.gradle/
+.DS_Store
