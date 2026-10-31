@@ -10,7 +10,7 @@ on:
       asset_name:
         description: "Exact release asset filename"
         required: true
-        default: "Elementals-Defense_1.0.7_apkcube (1).apks"
+        default: "Elementals-Defense_1.0.7_apkcube.1.apks"
 
 permissions:
   contents: read
@@ -26,7 +26,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y unzip openjdk-17-jdk
-          curl -fsSL https://raw.githubusercontent.com/JesusFreke/smali/master/README.md -o /tmp/smali-readme.txt
           curl -fsSL https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool -o /usr/local/bin/apktool
           sudo chmod +x /usr/local/bin/apktool
           curl -fsSL https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.11.1.jar -o /usr/local/bin/apktool.jar
@@ -62,7 +61,8 @@ jobs:
           release = get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}")
           asset = next((a for a in release["assets"] if a["name"] == asset_name), None)
           if asset is None:
-              raise SystemExit(f"Asset {asset_name!r} not found on release {tag!r}. Upload the original .apks file to that private release first.")
+              names = ", ".join(repr(a["name"]) for a in release["assets"])
+              raise SystemExit(f"Asset {asset_name!r} not found on release {tag!r}. Available assets: {names or '(none)'}")
           req = urllib.request.Request(asset["url"], headers={
               "Authorization": "Bearer " + token,
               "Accept": "application/octet-stream",
