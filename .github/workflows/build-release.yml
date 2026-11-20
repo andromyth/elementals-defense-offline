@@ -38,8 +38,9 @@ jobs:
           unzip -q build/elementals-defense-1.0.7-ads-free.apks -d build/verify
           test -s build/verify/base.apk
           APKSIGNER="$(find build/work/tools -type f -name apksigner -print -quit)"
-test -x "$APKSIGNER"
-"$APKSIGNER" verify --verbose build/verify/base.apk
+          test -n "$APKSIGNER"
+          test -x "$APKSIGNER"
+          "$APKSIGNER" verify --verbose build/verify/base.apk
           cat build/output-sha256.txt
           cat build/signing-cert.txt
 
