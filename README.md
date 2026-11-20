@@ -61,10 +61,3 @@ generated at `build/ed-release.jks` (git-ignored; never commit it).
 3. Confirm the wall is full after every wave.
 4. Capture device traffic while playing and confirm there is none (no `INTERNET`
    permission means the app cannot open sockets at all).
-
-## Security and provenance
-
-- Keep this repository private.
-- Never commit keystores, passwords, OAuth tokens, or personal data.
-- Do not distribute the original or modified game publicly without confirming the applicable rights and license.
-- A private repository does not by itself grant rights to modify or redistribute the game.
