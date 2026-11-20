@@ -21,6 +21,10 @@ Do not mark any item passed until it has been executed and evidence recorded.
 - [ ] Waves, minions, enemies, magic, UI, upgrades, and restart still work
       (manual full-run test outstanding).
 - [x] Test multiple waves and repeated damage events.
+- [x] +1000 gold patch is present in the single wave-win handler
+      (`assets/index.html`, `winOrNext()`) and the old award line is gone.
+- [x] Yandex interstitial completion callback is preserved in `assets/gg.js`.
+- [ ] Play one full wave on-device and confirm gold rises by wave reward + 1000.
 
 ## Offline/privacy
 - [x] `INTERNET` permission removed from the patched manifest.

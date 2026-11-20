@@ -10,6 +10,9 @@ Patches:
   4. Native telemetry (Firebase/AppMetrica) and AppLovin ad init are skipped.
   5. INTERNET, ad-ID and install-referrer permissions are removed.
   6. Ad/analytics auto-init ContentProviders are removed from the manifest.
+  7. Every completed wave grants an extra 1000 gold.
+  8. The Yandex interstitial wrapper invokes its completion callback
+     (without this the game could hang after an ad slot).
 """
 import os
 import re
@@ -56,6 +59,15 @@ edit(
     'wallHP=wallMax,bumpStat("waves")',
 )
 
+# ------------------------------------------------------------- 2. wave gold
+# winOrNext() is the single wave-completion handler, so this covers normal wins,
+# skipped waves and the final wave of a world.
+edit(
+    "assets/index.html",
+    "clearProjectiles(),gold+=waveEarned,worldEarned+=waveEarned,",
+    "clearProjectiles(),gold+=waveEarned+1000,worldEarned+=waveEarned,",
+)
+
 # ------------------------------------------------------- 3. web ads / analytics
 edit(
     "assets/gg.js",
@@ -68,7 +80,7 @@ override = """
 /* patched: ads and analytics removed */
 window.GG_ADS_OFF=!0;window.GG_REWARDS_OFF=!0;
 try{window.EDAM={progression:function(){},tutorial:function(){},shop:function(){},offer:function(){}}}catch(e){}
-try{window.YA={sdk:function(){return null},player:function(){return null},ready:function(){},flush:function(){},restore:function(){},onCloudReady:function(){},syncGameplay:function(){},gameplayStop:function(){},paused:function(){return!1},hasAds:function(){return!1},hasPay:function(){return!1},hasCloud:function(){return!1},priceNum:function(){return null},priceLike:function(){return null},buy:function(t,e,n){try{n&&n("no-payments")}catch(x){}},buyNC:function(t,e,n){try{n&&n("no-payments")}catch(x){}},catalog:function(cb){try{cb&&cb([])}catch(x){}},rewarded:function(ok,fail){try{fail&&fail(!1)}catch(x){}},interstitial:function(){},cloudWipe:function(cb){try{cb&&cb()}catch(x){}}}}catch(e){}
+try{window.YA={sdk:function(){return null},player:function(){return null},ready:function(){},flush:function(){},restore:function(){},onCloudReady:function(){},syncGameplay:function(){},gameplayStop:function(){},paused:function(){return!1},hasAds:function(){return!1},hasPay:function(){return!1},hasCloud:function(){return!1},priceNum:function(){return null},priceLike:function(){return null},buy:function(t,e,n){try{n&&n("no-payments")}catch(x){}},buyNC:function(t,e,n){try{n&&n("no-payments")}catch(x){}},catalog:function(cb){try{cb&&cb([])}catch(x){}},rewarded:function(ok,fail){try{fail&&fail(!1)}catch(x){}},interstitial:function(cb){try{cb&&cb()}catch(x){}},cloudWipe:function(cb){try{cb&&cb()}catch(x){}}}}catch(e){}
 """
 s = read("assets/gg.js")
 if "patched: ads and analytics removed" not in s:

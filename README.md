@@ -27,6 +27,11 @@ A patched, signed, fully offline, ad-free build now exists.
   remote config) skipped, Firebase/AppMetrica init providers removed, `EDAM`
   analytics dispatcher replaced with a no-op.
 - PairIP license check is patched to a no-op so the re-signed APK can start.
+- Wave gold: `winOrNext()` awards `waveEarned + 1000` instead of `waveEarned`,
+  so every completed wave (including skipped waves and a world's final wave)
+  grants an extra 1000 gold.
+- The Yandex interstitial wrapper now calls its completion callback; this fixes
+  a play hang seen in an earlier build where the callback was never invoked.
 - Verified on a physical arm64 Android 13 device: installs, launches, renders at
   60 fps, no crash, no ad/analytics SDK log activity.
 
