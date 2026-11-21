@@ -84,6 +84,9 @@ jobs:
           test -n "$BASE"
           sha256sum "$BASE" | tee reports/base-apk-sha256.txt
           apktool d -f "$BASE" -o work/decoded
+          # Capture game-layer Secret Element and ticket references from packaged assets.
+          find work/decoded/assets -type f -maxdepth 6 -print 2>/dev/null | sort > reports/game-assets.txt || true
+          grep -RniE -C 4 'secret.?element|premium.?ticket|ticket|required|unlock|lava|wind|element' work/decoded/assets --include='*.html' --include='*.js' --include='*.json' --include='*.txt' 2>/dev/null | head -n 4000 > reports/secret-element-leads.txt || true
           jadx --show-bad-code -d work/jadx "$BASE" >/dev/null 2>&1 || true
           grep -oE 'android.permission.[A-Z_]+' work/decoded/AndroidManifest.xml | sort -u > reports/permissions.txt || true
           grep -RniE 'firebase.analytics|crashlytics|appmetrica|applovin|chartboost|ironsource|levelplay|vungle|facebook.ads|google.android.gms.ads|mbridge|bidmachine|adjust|appsflyer' work/jadx --include='*.java' --include='*.kt' | head -n 1000 > reports/telemetry-leads.txt || true
