@@ -60,7 +60,7 @@ edit(
     'wallHP=wallMax,bumpStat("waves")',
 )
 
-# ------------------------------------------------- 3. Secret Element progression
+# ------------------------------------------------ Secret Element progression
 edit(
     "assets/index.html",
     "function premiumGate(t,e,a,n,r){return!premiumPass&&(premOfferData={elem:e,a:(ELEM_UNLOCK[e]||{}).a,b:(ELEM_UNLOCK[e]||{}).b,aT:a,bT:n,rT:r},premOfferOn=!0,premOfferT0=performance.now(),SFX.popup(),!0)}",
