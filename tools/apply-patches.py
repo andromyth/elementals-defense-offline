@@ -10,7 +10,7 @@ Patches:
   4. Native telemetry (Firebase/AppMetrica) and AppLovin ad init are skipped.
   5. INTERNET, ad-ID and install-referrer permissions are removed.
   6. Ad/analytics auto-init ContentProviders are removed from the manifest.
-  7. Every completed wave grants an extra 1000 gold.
+  7. Every completed wave grants an extra 10000 gold.
   8. The Yandex interstitial wrapper invokes its completion callback
      (without this the game could hang after an ad slot).
   9. Secret-element recipes are no longer blocked by the premium-ticket gate.
@@ -73,7 +73,7 @@ edit(
 edit(
     "assets/index.html",
     "clearProjectiles(),gold+=waveEarned,worldEarned+=waveEarned,",
-    "clearProjectiles(),gold+=waveEarned+1000,worldEarned+=waveEarned,",
+    "clearProjectiles(),gold+=waveEarned+10000,worldEarned+=waveEarned,",
 )
 
 # ------------------------------------------------------- 3. web ads / analytics
