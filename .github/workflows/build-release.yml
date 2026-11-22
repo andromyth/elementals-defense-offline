@@ -1,0 +1,58 @@
+name: Build and publish offline APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build-release.yml"
+      - "tools/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk curl unzip zip python3
+
+      - name: Build patched offline bundle with a fresh signing key
+        run: |
+          chmod +x tools/build-patched.sh
+          tools/build-patched.sh
+          test -s build/elementals-defense-1.0.7-ads-free.apks
+          test -s build/output-sha256.txt
+          test -s build/signing-cert.txt
+
+      - name: Verify bundle and signing certificate
+        run: |
+          mkdir -p build/verify
+          unzip -t build/elementals-defense-1.0.7-ads-free.apks
+          unzip -q build/elementals-defense-1.0.7-ads-free.apks -d build/verify
+          test -s build/verify/base.apk
+          APKSIGNER="$(find build/work/tools -type f -name apksigner -print -quit)"
+          test -n "$APKSIGNER"
+          test -x "$APKSIGNER"
+          "$APKSIGNER" verify --verbose build/verify/base.apk
+          cat build/output-sha256.txt
+          cat build/signing-cert.txt
+
+      - name: Publish new release without modifying original
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="offline-1.0.7-r2"
+          gh release create "$TAG" \
+            build/elementals-defense-1.0.7-ads-free.apks \
+            build/output-sha256.txt \
+            build/signing-cert.txt \
+            --title "Elementals Defense 1.0.7 — Offline / Ad-free (Fresh Key)" \
+            --notes "Rebuilt from the original 1.0.7 bundle with the repository patch set. Signed with a newly generated release key. This is a separate release; the original-1.0.7 release remains unchanged. Because the signing identity is new, uninstall the previously installed build before installing this package. Back up local game data first." \
+            --target "${{ github.sha }}"
