@@ -33,6 +33,17 @@ Install with a split-APK installer or:
 adb install-multiple base.apk splits/split_config.*.apk
 ```
 
+## offline-1.0.7-r2
+
+URL: https://github.com/andromyth/elementals-defense-offline/releases/tag/offline-1.0.7-r2
+
+Published by the `build-release.yml` workflow with a freshly generated signing
+key. Its bundle SHA-256 is
+`53b56aadaa21acfc4f9c80268bc1e63d2a20250db370b0a5b1ba6d7b767084db`.
+Because the signing identity differs, uninstall any previously installed build
+before installing this one. The workflow assets include `output-sha256.txt` and
+`signing-cert.txt`.
+
 ## original-1.0.7
 
 URL: https://github.com/andromyth/elementals-defense-offline/releases/tag/original-1.0.7
