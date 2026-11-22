@@ -35,13 +35,21 @@ A patched, signed, fully offline, ad-free build now exists.
 - Verified on a physical arm64 Android 13 device: installs, launches, renders at
   60 fps, no crash, no ad/analytics SDK log activity.
 
-Output artifact (not committed):
+## Releases
+
+Published artifacts and their hashes are recorded in `docs/releases.md`.
+
+Current patched release:
+[patched-1.0.7-gold-wave](https://github.com/andromyth/elementals-defense-offline/releases/tag/patched-1.0.7-gold-wave)
 
 - `elementals-defense-1.0.7-ads-free.apks` — SHA-256
-  `199117745075d2aa3945aceee4000330d4f9ad636a851961cf49db7152fcc3fb`
-- Base APK SHA-256 `4aac9f35f794ef35bbdf3951107c7bd2a1dab74154951da000183415aba71a2e`
+  `0d6347e4c1f687feba2dca14868c10376fdbf7eb0332741c39b5e4f29941cdf6`
+- Base APK SHA-256 `866ce5947dfc01c61f0f21dacf96a5fad83be56c119c70488370df1c860127db`
 - Signing certificate SHA-256
   `55:61:B7:E1:DE:7F:12:93:D4:3F:48:FD:1E:80:20:4C:09:86:E9:9C:33:BB:1E:76:FB:3F:03:23:5C:FA:E6:99`
+
+The earlier build without the wave-gold patch had bundle SHA-256
+`199117745075d2aa3945aceee4000330d4f9ad636a851961cf49db7152fcc3fb`.
 
 ## Build
 
